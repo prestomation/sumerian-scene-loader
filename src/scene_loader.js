@@ -9,7 +9,7 @@ export class LoaderFactory {
     }
     
     async getLoader(sceneId) {
-        const url= `https://${this._region}.sumerian.amazonaws.com/api/projects/abc/scenes/${this._scene_id}/publish`;
+        const url= `https://${this._region}.sumerian.amazonaws.com/api/projects/abc/scenes/${sceneId}/publish`;
         
 		const res = await window.fetch(url);
 		const json = res.json();
