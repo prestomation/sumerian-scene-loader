@@ -1,0 +1,25 @@
+{
+  "name": "sumerian-scene-loader",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "rollup -c"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/prestomation/sumerian-scene-loader.git"
+  },
+  "author": "Preston Tamkin",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/prestomation/sumerian-scene-loader/issues"
+  },
+  "homepage": "https://github.com/prestomation/sumerian-scene-loader#readme",
+  "devDependencies": {
+    "rollup": "^0.63.2",
+    "rollup-plugin-commonjs": "^9.1.3",
+    "rollup-plugin-json": "^3.0.0",
+    "rollup-plugin-node-resolve": "^3.3.0"
+  }
+}
