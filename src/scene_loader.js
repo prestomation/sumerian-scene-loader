@@ -12,7 +12,7 @@ export class LoaderFactory {
         const url= `https://${this._region}.sumerian.amazonaws.com/api/projects/abc/resources/${sceneId}/publish`;
         
 		const res = await window.fetch(url);
-		const json = res.json();
+		const json = await res.json();
 		const bundleRequestData = json.bundleData;
 		const binaryRequestData = json.binaryRequestData;
 
