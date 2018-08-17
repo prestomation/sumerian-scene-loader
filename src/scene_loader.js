@@ -11,9 +11,10 @@ export class LoaderFactory {
     async getLoader(sceneId) {
         const url= `https://${this._region}.sumerian.amazonaws.com/api/projects/abc/scenes/${this._scene_id}/publish`;
         
-		const res = await window.fetch(url).json(this.url);
-		const bundleRequestData = res.bundleData;
-		const binaryRequestData = res.binaryRequestData;
+		const res = await window.fetch(url);
+		const json = res.json();
+		const bundleRequestData = json.bundleData;
+		const binaryRequestData = json.binaryRequestData;
 
 		const authorizationRequestData = Object.assign({}, bundleRequestData, binaryRequestData);
        	const options = {
