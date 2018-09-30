@@ -1,6 +1,6 @@
-import { LoaderFactory } from "./scene_loader";
+import { SceneLoader } from "./scene_loader";
 
 export const sumerian_helpers = {
-    LoaderFactory 
+    SceneLoader
 };
 
