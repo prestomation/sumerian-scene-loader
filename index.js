@@ -46,7 +46,7 @@
 			const sceneId = sumerian_config.sceneId;
 
 	        
-			const res = await window.fetch(this._sign(url, this._credentials));
+			const res = await window.fetch(this._sign(url));
 			const json = await res.json();
 			const bundleRequestData = json.bundleData;
 			const binaryRequestData = json.binaryRequestData;
@@ -57,10 +57,17 @@
 			};
 			const ajax = new this._sumerian.Ajax('', options);
 
-	       	const dynamicLoader = new this._sumerian.DynamicLoader({world : this._world, ajax});
+			// The DynamicLoader currently does not allow another one to be constructed
+			// if the world already has a loader
+			// So we are going to fake it out, restoring the original world loader to the world after contruction
+			const oldLoader = this._world.loader;
+			this._world.loader = undefined;
+			const dynamicLoader = new this._sumerian.DynamicLoader({world : this._world, ajax});
+			this._world.loader = oldLoader;   
 
 			const bundleURL = json.bundleData[sceneId].url;
-			const bundle = await (await window.fetch(bundleURL)).json();
+			const headers = json.bundleData[sceneId].headers;
+			const bundle = await (await window.fetch(bundleURL, {headers})).json();
 
 			await dynamicLoader._ajax.prefill(bundle);
 			const entityLoader = new SceneEntityLoader(dynamicLoader);
@@ -74,23 +81,24 @@
 		}
 		
 
-		_sign(urlString, credentials) {
+		_sign(urlString ) {
 			// Total hack to sign our release URL
 
 			const url = new URL(urlString);
 			const uri = `${url.pathname}${url.search}`;
 
 			//Turn off param validation because of the hackery coming up
-			var service = new AWS.STS({endpoint : url.origin, credentials : credentials, paramValidation: false});
+			const service = new AWS.STS({endpoint : url.origin, credentials : this._credentials, paramValidation: false});
 		 
 			service.api.signingName = "sumerian";
 		 
 			//1. Create a request object for another, sorta similar request
 			//2. Sign it!
-			var req = service.getCallerIdentity({});
+			const req = service.getCallerIdentity({});
 			req.on("afterBuild", function(data){ data.httpRequest.path = uri; });
 			return req.presign();
 		};
+
 	}
 
 	const sumerian_helpers = {

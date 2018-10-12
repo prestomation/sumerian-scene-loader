@@ -11,7 +11,7 @@ This is a rollup package meant to support writing Sumerian script code outside o
 
 * The rollup build is configured to add the module exports to the window object so they can be used from Sumerian script components
 * The rollup build also has a S3 uploader. Just set the normal AWS credentials environment variables, as well as S3_BUCKET and S3_PREFIX, and the built bundles will be uploaded to S3. You can load these scripts in Sumerian by placing their URLs in the script component references section
-* This is primiarly meant as a deployment tool. It is recommended to place a cloudfront deployment infront of the bucket to ensure the best performance and edge caching
+* This is primiarly meant as a development tool. It is recommended to place a cloudfront deployment infront of the bucket to ensure the best performance and edge caching for the built javascript
 
 
 # Dynamic Scene Loader
