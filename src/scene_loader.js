@@ -49,15 +49,9 @@ export class SceneLoader {
        	const options = {
 				binaryRequestData : authorizationRequestData
 		};
-		const ajax = new this._sumerian.Ajax('', options);
+		this._world.loader._ajax.options.binaryRequestData = Object.assign(this._world.loader._ajax.options.binaryRequestData, authorizationRequestData);
 
-		// The DynamicLoader currently does not allow another one to be constructed
-		// if the world already has a loader
-		// So we are going to fake it out, restoring the original world loader to the world after contruction
-		const oldLoader = this._world.loader;
-		this._world.loader = undefined;
-		const dynamicLoader = new this._sumerian.DynamicLoader({world : this._world, ajax});
-		this._world.loader = oldLoader;   
+		const dynamicLoader = this._world.loader;
 
 		const bundleURL = json.bundleData[sceneId].url;
 		const headers = json.bundleData[sceneId].headers
